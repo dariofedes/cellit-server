@@ -6,7 +6,6 @@ const mockResponse = [
         "price": 909,
         "manufacturer": "Apple",
         "image_url": "https://www.yaphone.com/4197-thickbox_default/apple-iphone-12-pro-max.jpg",
-        "href": "phones/6076dacbed1f069df03354ab",
         "_id": "6076dacbed1f069df03354ab"
       },
       {
@@ -14,15 +13,16 @@ const mockResponse = [
         "price": 909,
         "manufacturer": "Apple",
         "image_url": "https://www.yaphone.com/4197-thickbox_default/apple-iphone-12-pro-max.jpg",
-        "href": "phones/607739b88a869c9aaf5587f8",
         "_id": "607739b88a869c9aaf5587f8"
       }
 ]
 
 describe('getPhones', () => {
+    let lean, select
+
     beforeEach(() => {
-        const lean = jest.fn(() => mockResponse)
-        const select = jest.fn(() => ({ lean }))
+        lean = jest.fn(() => mockResponse)
+        select = jest.fn(() => ({ lean }))
         Phone.find = jest.fn(() => ({ select }))
     })
 
@@ -63,10 +63,15 @@ describe('getPhones', () => {
         const phones = await getPhones()
 
         phones.forEach(phone => {
-            console.log(phone.href)
             expect(typeof phone.href).toBe('string')
             expect(phone.href.split('/')[0]).toBe('phones')
             expect(phone.href.split('/')[1]).toBe(phone.id)
         })        
+    })
+
+    afterEach(() => {
+        Phone.find.mockClear()
+        select.mockClear()
+        lean.mockClear()
     })
 })
