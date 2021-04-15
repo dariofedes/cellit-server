@@ -3,7 +3,7 @@ require('dotenv').config()
 const { env: { PORT = 8080, MONGODB_URL }} = process
 
 const express = require('express')
-const { getPhones } = require('./routes')
+const { getPhones, retrievePhoneDetails } = require('./routes')
 const { cors } = require('./mid-wares')
 const { mongoose } = require('./data')
 
@@ -14,6 +14,8 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
         app.use(cors)
 
         app.get('/phones', getPhones)
+
+        app.get('/phones/:id', retrievePhoneDetails)
 
         app.listen(PORT, () => console.log(`🚀 server up and running on port ${PORT}`))
 
