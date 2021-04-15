@@ -4,12 +4,14 @@ const { env: { PORT = 8080, MONGODB_URL }} = process
 
 const express = require('express')
 const { getPhones } = require('./routes')
-
+const { cors } = require('./mid-wares')
 const { mongoose } = require('./data')
 
 mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         const app = express()
+
+        app.use(cors)
 
         app.get('/phones', getPhones)
 
