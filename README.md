@@ -3,8 +3,13 @@
 ## Introduction
 A REST API for fetching mobile devices.
 
+## URL
+
+[`https://cellit.herokuapp.com/`](https://cellit.herokuapp.com/)
+
 ## Endpoints
 GET/phones -> returns the main info of all the devices stored in DB
+
 GET/phones/:id -> returns all the info of a specific device
 
 Every device object has a `href` value that leads to its details endpoint
